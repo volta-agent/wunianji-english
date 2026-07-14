@@ -852,6 +852,7 @@ body {
   .quiz-options { grid-template-columns: 1fr; }
 }
 
+/* Tablet optimizations */
 @media (min-width: 768px) and (max-width: 1366px) {
   .container { max-width: 720px; padding: 32px 24px; }
   .flashcard { min-height: 380px; }
@@ -861,18 +862,354 @@ body {
   .match-card { padding: 24px 16px; font-size: 1.1rem; }
   .quiz-option { padding: 20px 16px; font-size: 1.05rem; }
 }
+
+/* ==================== DARK MODE ==================== */
+body.dark-mode {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 50%, #0d1b2a 100%);
+  color: #e0e0e0;
+  --dark: #e0e0e0;
+}
+body.dark-mode .card-bg,
+body.dark-mode .stat-card,
+body.dark-mode .nav-tabs,
+body.dark-mode .quiz-question,
+body.dark-mode .quiz-option,
+body.dark-mode .unit-header,
+body.dark-mode .word-row,
+body.dark-mode .flashcard-face,
+body.dark-mode .sentence-block,
+body.dark-mode .celebration-card {
+  background: rgba(20,30,48,0.95);
+  border-color: rgba(230,57,70,0.2);
+}
+body.dark-mode .stat-value,
+body.dark-mode .quiz-word,
+body.dark-mode .flashcard-word,
+body.dark-mode .word-en,
+body.dark-mode .unit-title { color: #e0e0e0; }
+body.dark-mode .stat-label,
+body.dark-mode .flashcard-hint,
+body.dark-mode .quiz-prompt,
+body.dark-mode .sentence-zh,
+body.dark-mode .word-zh,
+body.dark-mode .word-sent,
+body.dark-mode .subtitle,
+body.dark-mode .auto-play-toggle,
+body.dark-mode .celebration-msg,
+body.dark-mode .flashcard-counter { color: #adb5bd; }
+body.dark-mode .auto-play-toggle label { color: #adb5bd; }
+body.dark-mode .flashcard-front {
+  background: linear-gradient(145deg, #0d1b2a, #162032, #0d1b2a);
+}
+body.dark-mode .flashcard-back {
+  background: linear-gradient(145deg, #1a0d0d, #201620, #0d1b2a);
+}
+body.dark-mode .quiz-direction { color: #adb5bd; }
+body.dark-mode .quiz-direction select {
+  background: rgba(20,30,48,0.95);
+  color: #e0e0e0;
+  border-color: rgba(230,57,70,0.3);
+}
+body.dark-mode .quiz-direction select option {
+  background: #0d1b2a;
+  color: #e0e0e0;
+}
+body.dark-mode .filter-pill {
+  background: rgba(20,30,48,0.8);
+  color: #adb5bd;
+  border-color: rgba(255,255,255,0.15);
+}
+body.dark-mode .filter-pill.active {
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  color: white;
+}
+body.dark-mode .mastery-pill {
+  background: rgba(20,30,48,0.8);
+  color: #adb5bd;
+  border-color: rgba(255,255,255,0.15);
+}
+body.dark-mode .mastery-pill.active {
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  color: white;
+}
+body.dark-mode .match-card.en {
+  background: linear-gradient(145deg, #0d1b2a, #162032);
+  color: #e0e0e0;
+}
+body.dark-mode .match-card.zh {
+  background: linear-gradient(145deg, #0d1a2a, #1a2838);
+  color: #e0e0e0;
+}
+body.dark-mode .match-card .match-audio { background: rgba(30,40,60,0.8); }
+body.dark-mode .word-audio-btn { background: rgba(230,57,70,0.15); }
+body.dark-mode .celebration-card { background: #0d1b2a; }
+body.dark-mode .sentence-block { background: rgba(20,30,48,0.6); }
+body.dark-mode .nav-tab { color: #adb5bd; }
+body.dark-mode .nav-tab:hover { background: rgba(230,57,70,0.12); }
+body.dark-mode .audio-label { color: #adb5bd; }
+body.dark-mode .flashcard-hint { color: #adb5bd; }
+body.dark-mode .flashcard-unit { color: white; }
+body.dark-mode .quiz-unit-tag { color: white; }
+
+.dark-toggle {
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: white;
+  transition: all 0.3s ease;
+}
+body.dark-mode .dark-toggle {
+  background: rgba(30,40,60,0.8);
+  color: #e0e0e0;
+  border-color: rgba(230,57,70,0.3);
+}
+
+/* ==================== CONFETTI CANVAS ==================== */
+.confetti-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  pointer-events: none;
+}
+
+/* ==================== QUIZ ICONS ==================== */
+.quiz-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+.quiz-option { position: relative; }
+.quiz-option.correct .quiz-icon { right: 12px; color: #06d6a0; }
+.quiz-option.wrong .quiz-icon { right: 12px; color: #e63946; }
+
+/* ==================== MATCH DIFFICULTY ==================== */
+.match-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.match-diff-btn {
+  padding: 8px 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.match-diff-btn:hover { border-color: var(--red); background: rgba(255,255,255,0.2); }
+.match-diff-btn.active {
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  color: white;
+  border-color: transparent;
+}
+
+/* ==================== MASTERY FILTER ==================== */
+.mastery-filter {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.mastery-pill {
+  padding: 6px 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.mastery-pill:hover { border-color: var(--red); background: rgba(255,255,255,0.2); }
+.mastery-pill.active {
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  color: white;
+  border-color: transparent;
+}
+
+/* ==================== CIRCULAR PROGRESS RING ==================== */
+.unit-progress-ring {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+}
+.unit-progress-ring circle {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+.unit-progress-ring .ring-bg { stroke: rgba(230,57,70,0.15); }
+.unit-progress-ring .ring-fill {
+  stroke: var(--red);
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==================== AUDIO LOADING ==================== */
+.audio-loading {
+  position: relative;
+  pointer-events: none;
+}
+.audio-loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  animation: audioSpin 0.7s linear infinite;
+}
+@keyframes audioSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==================== TRICKY WORDS SECTION ==================== */
+.tricky-section {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 2px solid rgba(255,107,107,0.3);
+  box-shadow: var(--shadow);
+}
+.tricky-title {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--dark);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tricky-empty {
+  font-size: 0.85rem;
+  color: var(--blue-light);
+  font-weight: 600;
+  text-align: center;
+  padding: 12px;
+}
+
+/* ==================== SWIPE HINT ==================== */
+.swipe-hint {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--silver);
+  margin-top: 8px;
+  animation: swipeHintFade 2s ease-in-out;
+}
+@keyframes swipeHintFade {
+  0%, 100% { opacity: 0; }
+  30%, 70% { opacity: 1; }
+}
+
+/* ==================== QUIZ DIRECTION ==================== */
+.quiz-direction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--silver-light);
+}
+.quiz-direction label { cursor: pointer; }
+.quiz-direction select {
+  padding: 6px 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* ==================== DAILY STREAK CALENDAR ==================== */
+.streak-calendar {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.streak-day {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--silver);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.streak-day.active {
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  color: white;
+  border-color: transparent;
+}
+.streak-day.today {
+  border: 2px solid var(--yellow);
+  box-shadow: 0 0 8px rgba(255,209,102,0.4);
+}
+
+/* ==================== WORD ROW HOVER ==================== */
+.word-row {
+  transition: all 0.2s ease;
+}
+.word-row:hover {
+  background: rgba(255,255,255,0.98);
+  transform: translateX(4px);
+}
+
+/* ==================== MOBILE STATS COMPACT ==================== */
+@media (max-width: 480px) {
+  .stats-bar { gap: 6px; margin-bottom: 16px; }
+  .stat-card { padding: 10px 6px; }
+  .stat-emoji { font-size: 1.2rem; }
+  .stat-value { font-size: 1.3rem; }
+  .stat-label { font-size: 0.65rem; }
+  .flashcard { min-height: 300px; }
+  .match-controls { gap: 4px; }
+  .match-diff-btn { padding: 6px 12px; font-size: 0.72rem; }
+  .dark-toggle { padding: 6px 10px; font-size: 0.75rem; }
+}
 </style>
 </head>
 <body>
 
 <div class="energy-bar"></div>
 <div class="energy-bg" id="energyBg"></div>
+<canvas class="confetti-canvas" id="confettiCanvas"></canvas>
 
 <div class="container">
   <div class="header">
     <div class="header-row">
       <h1>⚡ Lightning Kid English ⚡</h1>
-      <button class="lang-btn" onclick="toggleLang()">🌐 中/EN</button>
+      <div style="display:flex; gap:6px;">
+        <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" aria-label="Toggle dark mode">🌙</button>
+        <button class="lang-btn" onclick="toggleLang()" aria-label="Switch language">🌐 中/EN</button>
+      </div>
     </div>
     <div class="subtitle" data-i18n="subtitle">五年级上册 · 闪电少年英语学习</div>
   </div>
@@ -910,20 +1247,22 @@ body {
     </div>
   </div>
 
+  <div class="streak-calendar" id="streakCalendar" aria-label="Daily study streak"></div>
+
   <div class="nav-tabs">
-    <button class="nav-tab active" data-tab="flashcard">
+    <button class="nav-tab active" data-tab="flashcard" aria-label="Flashcards">
       <span class="tab-icon">🃏</span>
       <span data-i18n="tab_cards">卡片</span>
     </button>
-    <button class="nav-tab" data-tab="quiz">
+    <button class="nav-tab" data-tab="quiz" aria-label="Quiz">
       <span class="tab-icon">🎯</span>
       <span data-i18n="tab_quiz">测验</span>
     </button>
-    <button class="nav-tab" data-tab="match">
+    <button class="nav-tab" data-tab="match" aria-label="Match game">
       <span class="tab-icon">🧩</span>
       <span data-i18n="tab_match">配对</span>
     </button>
-    <button class="nav-tab" data-tab="words">
+    <button class="nav-tab" data-tab="words" aria-label="Word list">
       <span class="tab-icon">📖</span>
       <span data-i18n="tab_words">单词</span>
     </button>
@@ -943,9 +1282,9 @@ body {
           <div class="flashcard-counter" id="fcCounter">1 / 30</div>
           <div class="flashcard-word" id="fcWord">loading...</div>
           <div class="audio-row">
-            <button class="audio-btn audio-btn-en" onclick="event.stopPropagation(); playAudio('fc_en')" id="btn_fc_en">🔊</button>
+            <button class="audio-btn audio-btn-en" onclick="event.stopPropagation(); playAudio('fc_en')" id="btn_fc_en" aria-label="Play English audio">🔊</button>
             <span class="audio-label">EN</span>
-            <button class="audio-btn audio-btn-zh" onclick="event.stopPropagation(); playAudio('fc_zh')" id="btn_fc_zh">🔊</button>
+            <button class="audio-btn audio-btn-zh" onclick="event.stopPropagation(); playAudio('fc_zh')" id="btn_fc_zh" aria-label="Play Chinese audio">🔊</button>
             <span class="audio-label">ZH</span>
           </div>
           <div class="flashcard-hint">👆 点击翻转</div>
@@ -965,37 +1304,56 @@ body {
       </div>
     </div>
     <div class="card-actions">
-      <button class="card-btn btn-hard" onclick="markCard('hard')"><span data-i18n="btn_tricky">💔 不会</span></button>
-      <button class="card-btn btn-easy" onclick="markCard('easy')"><span data-i18n="btn_gotit">💚 会了</span></button>
+      <button class="card-btn btn-hard" onclick="markCard('hard')" aria-label="Mark as tricky"><span data-i18n="btn_tricky">💔 不会</span></button>
+      <button class="card-btn btn-easy" onclick="markCard('easy')" aria-label="Mark as got it"><span data-i18n="btn_gotit">💚 会了</span></button>
     </div>
+    <div class="swipe-hint" id="swipeHint">← swipe or use ← → keys →</div>
   </div>
 
   <!-- Quiz Panel -->
   <div class="panel" id="panel-quiz">
     <div class="filter-pills" id="quizFilters"></div>
+    <div class="quiz-direction">
+      <label data-i18n="quiz_direction">答题方向:</label>
+      <select id="quizDirection" onchange="startQuiz()" aria-label="Quiz direction">
+        <option value="en2zh">English → 中文</option>
+        <option value="zh2en">中文 → English</option>
+      </select>
+    </div>
     <div id="quizArea"></div>
   </div>
 
   <!-- Match Panel -->
   <div class="panel" id="panel-match">
-    <div style="text-align:center;margin-bottom:16px;">
-      <button class="card-btn" style="background:linear-gradient(135deg,var(--red),var(--red-dark));color:white;box-shadow:0 4px 16px rgba(230,57,70,0.4);display:inline-flex;" onclick="startMatch()"><span data-i18n="new_round">🔄 新一轮</span></button>
+    <div class="match-controls">
+      <button class="card-btn" style="background:linear-gradient(135deg,var(--red),var(--red-dark));color:white;box-shadow:0 4px 16px rgba(230,57,70,0.4);display:inline-flex;" onclick="startMatch()" aria-label="Start new round"><span data-i18n="new_round">🔄 新一轮</span></button>
+      <button class="match-diff-btn" data-diff="3" onclick="setMatchDiff(3)" aria-label="Easy difficulty">😊 Easy</button>
+      <button class="match-diff-btn active" data-diff="5" onclick="setMatchDiff(5)" aria-label="Normal difficulty">🎯 Normal</button>
+      <button class="match-diff-btn" data-diff="7" onclick="setMatchDiff(7)" aria-label="Hard difficulty">🔥 Hard</button>
     </div>
     <div class="match-grid" id="matchGrid"></div>
+    <div style="text-align:center;margin-top:12px;">
+      <button class="card-btn" id="matchUndoBtn" style="background:rgba(255,255,255,0.1);color:white;display:none;" onclick="undoMatch()" aria-label="Undo last match">↩️ Undo</button>
+    </div>
   </div>
 
   <!-- Words Panel -->
   <div class="panel" id="panel-words">
+    <div class="mastery-filter" id="masteryFilter" aria-label="Filter by mastery level"></div>
     <div id="wordsList"></div>
+    <div class="tricky-section" id="trickySection">
+      <div class="tricky-title">💔 <span data-i18n="tricky_title">Tricky Words Review</span> <span id="trickyCount" style="font-size:0.75rem;color:var(--blue-light);font-weight:600;"></span></div>
+      <div id="trickyList"></div>
+    </div>
   </div>
 </div>
 
-<div class="celebration" id="celebration">
+<div class="celebration" id="celebration" role="dialog" aria-live="polite" aria-label="Celebration">
   <div class="celebration-card">
     <div class="celebration-emoji" id="celEmoji">⚡</div>
     <div class="celebration-title" id="celTitle">太棒了！</div>
     <div class="celebration-msg" id="celMsg">你做得很好！</div>
-    <button class="celebration-btn" onclick="closeCelebration()"><span data-i18n="keep_going">继续加油！ ✨</span></button>
+    <button class="celebration-btn" onclick="closeCelebration()" aria-label="Close celebration"><span data-i18n="keep_going">继续加油！ ✨</span></button>
   </div>
 </div>
 
@@ -1026,7 +1384,7 @@ const VOCAB = [
   {en:"enjoy",zh:"欣赏",unit:1,sent_en:"I enjoy learning new things.",sent_zh:"我喜欢学习新知识。",au:{en:"audio/u1_enjoy_en.mp3",zh:"audio/u1_enjoy_zh.mp3",sen:"audio/u1_enjoy_sent_en.mp3",saz:"audio/u1_enjoy_sent_zh.mp3"}},
   {en:"funny",zh:"有趣的",unit:1,sent_en:"The clown is very funny!",sent_zh:"那个小丑很有趣！",au:{en:"audio/u1_funny_en.mp3",zh:"audio/u1_funny_zh.mp3",sen:"audio/u1_funny_sent_en.mp3",saz:"audio/u1_funny_sent_zh.mp3"}},
   {en:"easy",zh:"容易的",unit:1,sent_en:"This question is easy.",sent_zh:"这道题很容易。",au:{en:"audio/u1_easy_en.mp3",zh:"audio/u1_easy_zh.mp3",sen:"audio/u1_easy_sent_en.mp3",saz:"audio/u1_easy_sent_zh.mp3"}},
-  {en:"magic",zh:"神奇的",unit:1,sent_en:"Lightning Kid has magic powers!",sent_zh:"闪电少年有神奇的力量！",au:{en:"audio/u1_magic_en.mp3",zh:"audio/u1_magic_zh.mp3",sen:"audio/u1_magic_sent_en.mp3",saz:"audio/u1_magic_sent_zh.mp3"}},
+  {en:"magic",zh:"神奇的",unit:1,sent_en:"Ultraman has magic powers!",sent_zh:"奥特曼有神奇的力量！",au:{en:"audio/u1_magic_en.mp3",zh:"audio/u1_magic_zh.mp3",sen:"audio/u1_magic_sent_en.mp3",saz:"audio/u1_magic_sent_zh.mp3"}},
   {en:"important",zh:"重要的",unit:1,sent_en:"Homework is important.",sent_zh:"作业很重要。",au:{en:"audio/u1_important_en.mp3",zh:"audio/u1_important_zh.mp3",sen:"audio/u1_important_sent_en.mp3",saz:"audio/u1_important_sent_zh.mp3"}},
   {en:"interesting",zh:"有趣的",unit:1,sent_en:"This book is very interesting.",sent_zh:"这本书很有趣。",au:{en:"audio/u1_interesting_en.mp3",zh:"audio/u1_interesting_zh.mp3",sen:"audio/u1_interesting_sent_en.mp3",saz:"audio/u1_interesting_sent_zh.mp3"}},
   {en:"difficult",zh:"难的",unit:1,sent_en:"This maths problem is difficult.",sent_zh:"这道数学题很难。",au:{en:"audio/u1_difficult_en.mp3",zh:"audio/u1_difficult_zh.mp3",sen:"audio/u1_difficult_sent_en.mp3",saz:"audio/u1_difficult_sent_zh.mp3"}},
@@ -1046,12 +1404,12 @@ const VOCAB = [
   {en:"sleeping",zh:"在睡觉",unit:2,sent_en:"The baby is sleeping.",sent_zh:"宝宝在睡觉。",au:{en:"audio/u2_sleeping_en.mp3",zh:"audio/u2_sleeping_zh.mp3",sen:"audio/u2_sleeping_sent_en.mp3",saz:"audio/u2_sleeping_sent_zh.mp3"}},
   {en:"eating",zh:"在吃",unit:2,sent_en:"We are eating lunch together.",sent_zh:"我们一起在吃午餐。",au:{en:"audio/u2_eating_en.mp3",zh:"audio/u2_eating_zh.mp3",sen:"audio/u2_eating_sent_en.mp3",saz:"audio/u2_eating_sent_zh.mp3"}},
   {en:"listening to music",zh:"在听音乐",unit:2,sent_en:"She is listening to music.",sent_zh:"她在听音乐。",au:{en:"audio/u2_listening_to_music_en.mp3",zh:"audio/u2_listening_to_music_zh.mp3",sen:"audio/u2_listening_to_music_sent_en.mp3",saz:"audio/u2_listening_to_music_sent_zh.mp3"}},
-  {en:"reading",zh:"在读书",unit:2,sent_en:"I am reading a book about Lightning Kid.",sent_zh:"我在读一本关于闪电少年的书。",au:{en:"audio/u2_reading_en.mp3",zh:"audio/u2_reading_zh.mp3",sen:"audio/u2_reading_sent_en.mp3",saz:"audio/u2_reading_sent_zh.mp3"}},
+  {en:"reading",zh:"在读书",unit:2,sent_en:"I am reading a book about Ultraman.",sent_zh:"我在读一本关于奥特曼的书。",au:{en:"audio/u2_reading_en.mp3",zh:"audio/u2_reading_zh.mp3",sen:"audio/u2_reading_sent_en.mp3",saz:"audio/u2_reading_sent_zh.mp3"}},
   {en:"missing",zh:"遗漏的",unit:2,sent_en:"Something is missing from my bag.",sent_zh:"我的包里少了什么东西。",au:{en:"audio/u2_missing_en.mp3",zh:"audio/u2_missing_zh.mp3",sen:"audio/u2_missing_sent_en.mp3",saz:"audio/u2_missing_sent_zh.mp3"}},
   {en:"solve",zh:"解；解答",unit:2,sent_en:"Can you help me solve this puzzle?",sent_zh:"你能帮我解开这个谜题吗？",au:{en:"audio/u2_solve_en.mp3",zh:"audio/u2_solve_zh.mp3",sen:"audio/u2_solve_sent_en.mp3",saz:"audio/u2_solve_sent_zh.mp3"}},
   {en:"puzzle",zh:"难题；谜",unit:2,sent_en:"This puzzle is very hard.",sent_zh:"这个谜题很难。",au:{en:"audio/u2_puzzle_en.mp3",zh:"audio/u2_puzzle_zh.mp3",sen:"audio/u2_puzzle_sent_en.mp3",saz:"audio/u2_puzzle_sent_zh.mp3"}},
   {en:"a piece of cake",zh:"容易的事",unit:2,sent_en:"This test is a piece of cake!",sent_zh:"这个考试太简单了！",au:{en:"audio/u2_a_piece_of_cake_en.mp3",zh:"audio/u2_a_piece_of_cake_zh.mp3",sen:"audio/u2_a_piece_of_cake_sent_en.mp3",saz:"audio/u2_a_piece_of_cake_sent_zh.mp3"}},
-  {en:"body",zh:"身体",unit:2,sent_en:"Lightning Kid is strong in his whole body.",sent_zh:"闪电少年全身都很强壮。",au:{en:"audio/u2_body_en.mp3",zh:"audio/u2_body_zh.mp3",sen:"audio/u2_body_sent_en.mp3",saz:"audio/u2_body_sent_zh.mp3"}},
+  {en:"body",zh:"身体",unit:2,sent_en:"Ultraman is strong in his whole body.",sent_zh:"奥特曼全身都很强壮。",au:{en:"audio/u2_body_en.mp3",zh:"audio/u2_body_zh.mp3",sen:"audio/u2_body_sent_en.mp3",saz:"audio/u2_body_sent_zh.mp3"}},
   {en:"a pair of wings",zh:"一对翅膀",unit:2,sent_en:"The insect has a pair of wings.",sent_zh:"这只昆虫有一对翅膀。",au:{en:"audio/u2_a_pair_of_wings_en.mp3",zh:"audio/u2_a_pair_of_wings_zh.mp3",sen:"audio/u2_a_pair_of_wings_sent_en.mp3",saz:"audio/u2_a_pair_of_wings_sent_zh.mp3"}},
   {en:"insect",zh:"昆虫",unit:2,sent_en:"I can see many insects in the garden.",sent_zh:"我在花园里能看到很多昆虫。",au:{en:"audio/u2_insect_en.mp3",zh:"audio/u2_insect_zh.mp3",sen:"audio/u2_insect_sent_en.mp3",saz:"audio/u2_insect_sent_zh.mp3"}},
   {en:"soft",zh:"柔软的",unit:2,sent_en:"The pillow is very soft.",sent_zh:"枕头很柔软。",au:{en:"audio/u2_soft_en.mp3",zh:"audio/u2_soft_zh.mp3",sen:"audio/u2_soft_sent_en.mp3",saz:"audio/u2_soft_sent_zh.mp3"}},
@@ -1067,7 +1425,7 @@ const VOCAB = [
   {en:"Big Ben",zh:"大本钟",unit:2,sent_en:"Big Ben is in London.",sent_zh:"大本钟在伦敦。",au:{en:"audio/u2_Big_Ben_en.mp3",zh:"audio/u2_Big_Ben_zh.mp3",sen:"audio/u2_Big_Ben_sent_en.mp3",saz:"audio/u2_Big_Ben_sent_zh.mp3"}},
   {en:"the Great Wall",zh:"长城",unit:2,sent_en:"The Great Wall is very long!",sent_zh:"长城很长！",au:{en:"audio/u2_the_Great_Wall_en.mp3",zh:"audio/u2_the_Great_Wall_zh.mp3",sen:"audio/u2_the_Great_Wall_sent_en.mp3",saz:"audio/u2_the_Great_Wall_sent_zh.mp3"}},
   {en:"Golden Gate Bridge",zh:"金门大桥",unit:2,sent_en:"The Golden Gate Bridge is in America.",sent_zh:"金门大桥在美国。",au:{en:"audio/u2_Golden_Gate_Bridge_en.mp3",zh:"audio/u2_Golden_Gate_Bridge_zh.mp3",sen:"audio/u2_Golden_Gate_Bridge_sent_en.mp3",saz:"audio/u2_Golden_Gate_Bridge_sent_zh.mp3"}},
-  {en:"Japan",zh:"日本",unit:2,sent_en:"Lightning Kid is a superhero.",sent_zh:"闪电少年是一个超级英雄。",au:{en:"audio/u2_Japan_en.mp3",zh:"audio/u2_Japan_zh.mp3",sen:"audio/u2_Japan_sent_en.mp3",saz:"audio/u2_Japan_sent_zh.mp3"}},
+  {en:"Japan",zh:"日本",unit:2,sent_en:"Ultraman comes from Japan.",sent_zh:"奥特曼来自日本。",au:{en:"audio/u2_Japan_en.mp3",zh:"audio/u2_Japan_zh.mp3",sen:"audio/u2_Japan_sent_en.mp3",saz:"audio/u2_Japan_sent_zh.mp3"}},
   {en:"France",zh:"法国",unit:2,sent_en:"France is famous for the Eiffel Tower.",sent_zh:"法国以埃菲尔铁塔闻名。",au:{en:"audio/u2_France_en.mp3",zh:"audio/u2_France_zh.mp3",sen:"audio/u2_France_sent_en.mp3",saz:"audio/u2_France_sent_zh.mp3"}},
   {en:"spell",zh:"拼写",unit:2,sent_en:"Can you spell this word?",sent_zh:"你能拼写这个单词吗？",au:{en:"audio/u2_spell_en.mp3",zh:"audio/u2_spell_zh.mp3",sen:"audio/u2_spell_sent_en.mp3",saz:"audio/u2_spell_sent_zh.mp3"}},
   // Unit 3
@@ -1130,9 +1488,12 @@ const I18N = {
     round_complete: '本轮完成！再来一轮？', perfect_match: '完美配对！',
     perfect_match_msg: '你把所有单词都配对成功了！', all_mastered: '全部掌握！',
     all_mastered_msg: '每个单词你都学会了！你是最强的！', keep_going: '继续加油！ ⚡',
+    quiz_direction: '答题方向:', tricky_title: '薄弱词汇复习',
+    mastery_all: '⚡ 全部', mastery_new: '🆕 新词', mastery_learning: '📝 学习中',
+    mastery_familiar: '👍 熟悉', mastery_mastered: '✅ 已掌握',
   },
   en: {
-    subtitle: '5th Grade · Lightning Kid English Learning',
+    subtitle: '5th Grade · Ultraman English Learning',
     learned: 'Learned', streak: 'Streak', total: 'Total', score: 'Score',
     progress: 'Progress', tab_cards: 'Cards', tab_quiz: 'Quiz', tab_match: 'Match', tab_words: 'Words',
     auto_play: '🔊 Auto-play audio', btn_tricky: '💔 Tricky', btn_gotit: '💚 Got it!', new_round: '🔄 New Round',
@@ -1140,6 +1501,9 @@ const I18N = {
     round_complete: 'Round complete! Start a new one?', perfect_match: 'Perfect Match!',
     perfect_match_msg: 'You matched all the pairs! You are amazing!', all_mastered: 'All Mastered!',
     all_mastered_msg: 'You learned every word! You are the strongest!', keep_going: 'Keep Going! ⚡',
+    quiz_direction: 'Direction:', tricky_title: 'Tricky Words Review',
+    mastery_all: '⚡ All', mastery_new: '🆕 New', mastery_learning: '📝 Learning',
+    mastery_familiar: '👍 Familiar', mastery_mastered: '✅ Mastered',
   }
 };
 
@@ -1158,6 +1522,7 @@ function toggleLang() {
   updateUITranslations();
   if (currentTab === 'words') renderWords();
   if (currentTab === 'match') startMatch();
+  renderStreakCalendar();
 }
 
 // ===================== STATE =====================
@@ -1242,9 +1607,13 @@ function switchTab(tab) {
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
   document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + tab));
   if (tab === 'flashcard') initFlashcard();
-  if (tab === 'quiz') initQuiz();
+  if (tab === 'quiz') startQuiz();
   if (tab === 'match') startMatch();
   if (tab === 'words') renderWords();
+  if (tab !== 'flashcard') {
+    const hint = document.getElementById('swipeHint');
+    if (hint) hint.style.display = 'none';
+  }
 }
 
 // ===================== STATS =====================
@@ -1257,7 +1626,10 @@ function updateStats() {
   const pct = Math.round((learned / VOCAB.length) * 100);
   document.getElementById('progressPct').textContent = pct + '%';
   document.getElementById('progressFill').style.width = pct + '%';
-  if (learned === VOCAB.length) showCelebration('🏆', t('all_mastered'), t('all_mastered_msg'));
+  if (learned === VOCAB.length && VOCAB.length > 0) {
+    launchConfetti();
+    showCelebration('🏆', t('all_mastered'), t('all_mastered_msg'));
+  }
 }
 
 // ===================== FLASHCARD =====================
@@ -1292,12 +1664,16 @@ function renderFlashcard(pool) {
   document.getElementById('fcWordBack').textContent = v.zh;
   document.getElementById('fcSentEn').textContent = v.sent_en;
   document.getElementById('fcSentZh').textContent = v.sent_zh;
+  document.getElementById('flashcard').setAttribute('aria-label', `Flashcard: ${v.en} - ${v.zh}`);
   autoPlayEn();
 }
 
 function flipCard() {
   fcFlipped = !fcFlipped;
   document.getElementById('flashcard').classList.toggle('flipped', fcFlipped);
+  if (fcFlipped && document.getElementById('autoPlayCheck').checked) {
+    setTimeout(() => playAudio('fc_sent_en'), 500);
+  }
 }
 
 function markCard(difficulty) {
@@ -1305,9 +1681,9 @@ function markCard(difficulty) {
   const idx = vocabIndex(pool[fcIndex]);
   if (difficulty === 'easy') { state.mastery[idx] = Math.min((state.mastery[idx] || 0) + 1, 3); state.score += 10; state.streak++; }
   else { state.mastery[idx] = Math.max((state.mastery[idx] || 0) - 1, 0); state.streak = 0; }
-  saveState(); updateStats();
+  saveState(); updateStats(); markStudyToday(); renderStreakCalendar();
   fcIndex = (fcIndex + 1) % pool.length;
-  if (fcIndex === 0 && difficulty === 'easy') showCelebration();
+  if (fcIndex === 0 && difficulty === 'easy') { launchConfetti(); showCelebration(); }
   renderFlashcard(pool);
 }
 
@@ -1323,6 +1699,8 @@ function startQuiz() {
 }
 
 function nextQuiz() {
+  const dir = document.getElementById('quizDirection').value;
+  if (dir === 'zh2en') { nextQuizReverse(); return; }
   if (!quizQueue.length) {
     document.getElementById('quizArea').innerHTML = `<div class="empty-state"><div class="empty-emoji">🎉</div><p>${t('round_complete')}</p><button class="card-btn" style="background:linear-gradient(135deg,var(--red),var(--red-dark));color:white;margin-top:16px;display:inline-flex;" onclick="startQuiz()">${t('new_round')}</button></div>`;
     return;
@@ -1335,8 +1713,8 @@ function nextQuiz() {
       <div class="quiz-prompt">${t('quiz_question')}</div>
       <div class="quiz-word">${current.en}</div>
       <div class="quiz-audio-row">
-        <button class="audio-btn audio-btn-en" onclick="playAudioDirect(quizCurrent?.au?.en)" style="width:36px;height:36px;font-size:1rem;">🔊</button>
-        <button class="audio-btn audio-btn-zh" onclick="playAudioDirect(quizCurrent?.au?.zh)" style="width:36px;height:36px;font-size:1rem;">🔊</button>
+        <button class="audio-btn audio-btn-en" onclick="playAudioDirect(quizCurrent?.au?.en)" style="width:36px;height:36px;font-size:1rem;" aria-label="Play English audio">🔊</button>
+        <button class="audio-btn audio-btn-zh" onclick="playAudioDirect(quizCurrent?.au?.zh)" style="width:36px;height:36px;font-size:1rem;" aria-label="Play Chinese audio">🔊</button>
       </div>
       <div class="quiz-unit-tag">${t('unit')} ${current.unit}</div>
     </div>
@@ -1349,17 +1727,29 @@ function nextQuiz() {
 function answerQuiz(btn, chosen, correct) {
   document.querySelectorAll('.quiz-option').forEach(b => b.style.pointerEvents = 'none');
   const idx = vocabIndex(quizCurrent);
-  if (chosen === correct) { btn.classList.add('correct'); state.mastery[idx] = Math.min((state.mastery[idx] || 0) + 1, 3); state.score += 15; state.streak++; }
-  else { btn.classList.add('wrong'); document.querySelectorAll('.quiz-option').forEach(b => { if (b.textContent.trim() === correct) b.classList.add('correct'); }); state.mastery[idx] = Math.max((state.mastery[idx] || 0) - 1, 0); state.streak = 0; }
-  saveState(); updateStats();
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    btn.innerHTML += '<span class="quiz-icon">✓</span>';
+    state.mastery[idx] = Math.min((state.mastery[idx] || 0) + 1, 3);
+    state.score += 15; state.streak++;
+  } else {
+    btn.classList.add('wrong');
+    btn.innerHTML += '<span class="quiz-icon">✗</span>';
+    document.querySelectorAll('.quiz-option').forEach(b => { if (b.textContent.trim() === correct) { b.classList.add('correct'); b.innerHTML += '<span class="quiz-icon">✓</span>'; } });
+    state.mastery[idx] = Math.max((state.mastery[idx] || 0) - 1, 0);
+    state.streak = 0;
+  }
+  saveState(); updateStats(); markStudyToday(); renderStreakCalendar();
   setTimeout(nextQuiz, 1200);
 }
 
 // ===================== MATCH =====================
 function startMatch() {
-  const pool = shuffle(VOCAB).slice(0, 5);
+  const pool = shuffle(VOCAB).slice(0, matchDifficulty);
   matchPairs = shuffle([...pool.map(v => ({ type: 'en', text: v.en, pairId: vocabIndex(v) })), ...pool.map(v => ({ type: 'zh', text: v.zh, pairId: vocabIndex(v) }))]);
   matchSelected = null;
+  matchHistory = [];
+  document.getElementById('matchUndoBtn').style.display = 'none';
   renderMatch();
 }
 
@@ -1367,8 +1757,8 @@ function renderMatch() {
   document.getElementById('matchGrid').innerHTML = matchPairs.map((c, i) => {
     const v = VOCAB[c.pairId];
     const audioPath = v ? (c.type === 'en' ? v.au.en : v.au.zh) : '';
-    return `<div class="match-card ${c.type} ${c.matched ? 'matched' : ''}" data-idx="${i}" data-pairid="${c.pairId}" data-cardtype="${c.type}" onclick="selectMatch(${i})">
-      <button class="match-audio" onclick="event.stopPropagation(); playMatchAudio(this.parentElement)">🔊</button>
+    return `<div class="match-card ${c.type} ${c.matched ? 'matched' : ''}" data-idx="${i}" data-pairid="${c.pairId}" data-cardtype="${c.type}" onclick="selectMatch(${i})" role="button" aria-label="${c.type === 'en' ? 'English' : 'Chinese'}: ${c.text}">
+      <button class="match-audio" onclick="event.stopPropagation(); playMatchAudio(this.parentElement)" aria-label="Listen to audio">🔊</button>
       ${c.text}
     </div>`;
   }).join('');
@@ -1397,8 +1787,14 @@ function selectMatch(idx) {
     if (prev.pairId === card.pairId && prev.type !== card.type) {
       prevEl.classList.remove('selected'); prevEl.classList.add('matched'); curEl.classList.add('matched');
       state.mastery[prev.pairId] = Math.min((state.mastery[prev.pairId] || 0) + 1, 3);
-      state.score += 20; state.streak++; matchSelected = null;
-      if (matchPairs.every(c => c.matched)) { saveState(); updateStats(); setTimeout(() => showCelebration('🧩', t('perfect_match'), t('perfect_match_msg')), 600); }
+      state.score += 20; state.streak++;
+      matchHistory.push({ idx1: matchSelected, idx2: idx, pairId: prev.pairId });
+      document.getElementById('matchUndoBtn').style.display = 'inline-flex';
+      matchSelected = null;
+      if (matchPairs.every(c => c.matched)) {
+        saveState(); updateStats(); markStudyToday(); renderStreakCalendar();
+        setTimeout(() => { launchConfetti(); showCelebration('🧩', t('perfect_match'), t('perfect_match_msg')); }, 600);
+      }
     } else {
       prevEl.classList.remove('selected'); prevEl.classList.add('wrong-match'); curEl.classList.add('wrong-match');
       state.streak = 0; matchSelected = null;
@@ -1412,18 +1808,26 @@ function selectMatch(idx) {
 function renderWords() {
   const container = document.getElementById('wordsList');
   container.innerHTML = '';
+  buildMasteryFilter();
   Object.entries(UNITS).forEach(([unit, info]) => {
-    const words = VOCAB.filter(v => v.unit === parseInt(unit));
+    let words = VOCAB.filter(v => v.unit === parseInt(unit));
+    const totalWords = words.length;
     const learned = words.filter(v => (state.mastery[vocabIndex(v)] || 0) >= 2).length;
+    if (masteryFilterVal !== 'all') {
+      const filterLevel = parseInt(masteryFilterVal);
+      words = words.filter(v => (state.mastery[vocabIndex(v)] || 0) === filterLevel);
+    }
     const section = document.createElement('div');
     section.className = 'unit-section';
+    const pct = totalWords > 0 ? Math.round((learned / totalWords) * 100) : 0;
     section.innerHTML = `
-      <div class="unit-header" onclick="toggleUnit(this)">
+      <div class="unit-header" onclick="toggleUnit(this)" role="button" aria-expanded="false">
         <div class="unit-icon" style="background:${info.color}">${info.icon}</div>
         <div class="unit-info">
           <div class="unit-title">${t('unit')} ${unit}: ${info.name}</div>
-          <div class="unit-count">${learned} / ${words.length} ${t('mastered')}</div>
+          <div class="unit-count">${learned} / ${totalWords} ${t('mastered')}</div>
         </div>
+        ${createProgressRing(pct)}
         <div class="unit-arrow">▾</div>
       </div>
       <div class="unit-words">
@@ -1436,18 +1840,20 @@ function renderWords() {
               <div class="word-zh">${v.zh}</div>
               <div class="word-sent">${v.sent_en}</div>
             </div>
-            <button class="word-audio-btn" onclick="event.stopPropagation(); playAudioDirect(VOCAB[${idx}]?.au?.en)">🔊</button>
-            <button class="word-audio-btn" onclick="event.stopPropagation(); playAudioDirect(VOCAB[${idx}]?.au?.sen)">💬</button>
+            <button class="word-audio-btn" onclick="event.stopPropagation(); playAudioDirect(VOCAB[${idx}]?.au?.en)" aria-label="Listen in English">🔊</button>
+            <button class="word-audio-btn" onclick="event.stopPropagation(); playAudioDirect(VOCAB[${idx}]?.au?.sen)" aria-label="Listen to sentence">💬</button>
             <span class="mastery-dot mastery-${m}"></span>
           </div>`;
         }).join('')}
       </div>`;
     container.appendChild(section);
   });
+  renderTrickyWords();
 }
 
 function toggleUnit(header) {
   header.classList.toggle('open');
+  header.setAttribute('aria-expanded', header.classList.contains('open'));
   header.nextElementSibling.classList.toggle('open');
 }
 
@@ -1458,15 +1864,278 @@ function showCelebration(emoji, title, msg) {
   document.getElementById('celTitle').textContent = title || e.title;
   document.getElementById('celMsg').textContent = msg || e.msg;
   document.getElementById('celebration').classList.add('show');
+  launchConfetti();
 }
 
 function closeCelebration() { document.getElementById('celebration').classList.remove('show'); }
 
+// ===================== DARK MODE =====================
+function toggleDark() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  localStorage.setItem('ultra-dark', isDark ? '1' : '0');
+  document.getElementById('darkToggle').textContent = isDark ? '☀️' : '🌙';
+}
+
+function initDarkMode() {
+  if (localStorage.getItem('ultra-dark') === '1') {
+    document.body.classList.add('dark-mode');
+    document.getElementById('darkToggle').textContent = '☀️';
+  }
+}
+
+// ===================== CONFETTI =====================
+let confettiPieces = [];
+let confettiAnimId = null;
+
+function launchConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  confettiPieces = [];
+
+  const colors = ['#e63946','#ffd166','#f4a261','#06d6a0','#457b9d','#1d3557','#ff6b6b'];
+  for (let i = 0; i < 120; i++) {
+    confettiPieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: 4 + Math.random() * 6,
+      h: 8 + Math.random() * 8,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 4,
+      vy: 2 + Math.random() * 4,
+      rot: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.2,
+      opacity: 1,
+    });
+  }
+
+  if (confettiAnimId) cancelAnimationFrame(confettiAnimId);
+
+  let elapsed = 0;
+  function animate() {
+    elapsed += 16;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confettiPieces.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.rotSpeed;
+      p.vy += 0.05;
+      if (elapsed > 2000) p.opacity -= 0.02;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    if (elapsed < 4000 && confettiPieces.some(p => p.opacity > 0)) {
+      confettiAnimId = requestAnimationFrame(animate);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiAnimId = null;
+    }
+  }
+  animate();
+}
+
+// ===================== DAILY STREAK =====================
+function getStreakData() {
+  try { return JSON.parse(localStorage.getItem('ultra-streak-days') || '{}'); } catch(e) { return {}; }
+}
+
+function markStudyToday() {
+  const today = new Date().toISOString().slice(0, 10);
+  const data = getStreakData();
+  data[today] = (data[today] || 0) + 1;
+  localStorage.setItem('ultra-streak-days', JSON.stringify(data));
+}
+
+function renderStreakCalendar() {
+  const cal = document.getElementById('streakCalendar');
+  const data = getStreakData();
+  const today = new Date();
+  let html = '';
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const isActive = data[key] && data[key] > 0;
+    const isToday = i === 0;
+    html += `<div class="streak-day ${isActive ? 'active' : ''} ${isToday ? 'today' : ''}">${dayNames[d.getDay()]}</div>`;
+  }
+  cal.innerHTML = html;
+}
+
+// ===================== KEYBOARD SUPPORT =====================
+document.addEventListener('keydown', (e) => {
+  if (currentTab === 'flashcard') {
+    if (e.code === 'Space' || e.code === 'Enter') { e.preventDefault(); flipCard(); }
+    else if (e.code === 'ArrowRight') { e.preventDefault(); markCard('easy'); }
+    else if (e.code === 'ArrowLeft') { e.preventDefault(); markCard('hard'); }
+  }
+  if (e.code === 'Escape') closeCelebration();
+});
+
+// ===================== SWIPE SUPPORT =====================
+let touchStartX = 0, touchStartY = 0;
+
+document.addEventListener('touchstart', (e) => {
+  if (currentTab !== 'flashcard') return;
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+document.addEventListener('touchend', (e) => {
+  if (currentTab !== 'flashcard') return;
+  const dx = e.changedTouches[0].screenX - touchStartX;
+  const dy = e.changedTouches[0].screenY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+    if (dx < 0) markCard('easy');
+    else markCard('hard');
+  } else if (Math.abs(dy) < 20 && Math.abs(dx) < 20) {
+    flipCard();
+  }
+}, { passive: true });
+
+// ===================== AUDIO LOADING INDICATOR =====================
+function showAudioLoading(btn) { if (btn) btn.classList.add('audio-loading'); }
+function hideAudioLoading(btn) { if (btn) btn.classList.remove('audio-loading'); }
+
+// ===================== QUIZ REVERSE MODE =====================
+function nextQuizReverse() {
+  if (!quizQueue.length) {
+    document.getElementById('quizArea').innerHTML = `<div class="empty-state"><div class="empty-emoji">🎉</div><p>${t('round_complete')}</p><button class="card-btn" style="background:linear-gradient(135deg,var(--red),var(--red-dark));color:white;margin-top:16px;display:inline-flex;" onclick="startQuiz()">${t('new_round')}</button></div>`;
+    return;
+  }
+  const current = quizQueue.shift();
+  quizCurrent = current;
+  const options = shuffle([current, ...shuffle(VOCAB.filter(v => v !== current)).slice(0, 3)]);
+  document.getElementById('quizArea').innerHTML = `
+    <div class="quiz-question">
+      <div class="quiz-prompt">${t('quiz_question')}</div>
+      <div class="quiz-word">${current.zh}</div>
+      <div class="quiz-audio-row">
+        <button class="audio-btn audio-btn-en" onclick="playAudioDirect(quizCurrent?.au?.en)" style="width:36px;height:36px;font-size:1rem;" aria-label="Play English audio">🔊</button>
+        <button class="audio-btn audio-btn-zh" onclick="playAudioDirect(quizCurrent?.au?.zh)" style="width:36px;height:36px;font-size:1rem;" aria-label="Play Chinese audio">🔊</button>
+      </div>
+      <div class="quiz-unit-tag">${t('unit')} ${current.unit}</div>
+    </div>
+    <div class="quiz-options">
+      ${options.map(o => `<button class="quiz-option" onclick="answerQuizReverse(this,'${o.en.replace(/'/g,"\\'")}','${current.en.replace(/'/g,"\\'")}')">${o.en}</button>`).join('')}
+    </div>`;
+  setTimeout(() => playAudioDirect(quizCurrent?.au?.en), 400);
+}
+
+function answerQuizReverse(btn, chosen, correct) {
+  document.querySelectorAll('.quiz-option').forEach(b => b.style.pointerEvents = 'none');
+  const idx = vocabIndex(quizCurrent);
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    btn.innerHTML += '<span class="quiz-icon">✓</span>';
+    state.mastery[idx] = Math.min((state.mastery[idx] || 0) + 1, 3);
+    state.score += 15; state.streak++;
+  } else {
+    btn.classList.add('wrong');
+    btn.innerHTML += '<span class="quiz-icon">✗</span>';
+    document.querySelectorAll('.quiz-option').forEach(b => { if (b.textContent.trim().includes(correct)) { b.classList.add('correct'); b.innerHTML += '<span class="quiz-icon">✓</span>'; } });
+    state.mastery[idx] = Math.max((state.mastery[idx] || 0) - 1, 0);
+    state.streak = 0;
+  }
+  saveState(); updateStats(); markStudyToday(); renderStreakCalendar();
+  setTimeout(nextQuizReverse, 1200);
+}
+
+// ===================== MATCH DIFFICULTY & UNDO =====================
+let matchDifficulty = 5;
+let matchHistory = [];
+
+function setMatchDiff(n) {
+  matchDifficulty = n;
+  document.querySelectorAll('.match-diff-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.diff) === n));
+  startMatch();
+}
+
+function undoMatch() {
+  if (matchHistory.length === 0) return;
+  const last = matchHistory.pop();
+  const prevEl = document.querySelector(`.match-card[data-idx="${last.idx1}"]`);
+  const curEl = document.querySelector(`.match-card[data-idx="${last.idx2}"]`);
+  if (prevEl) { prevEl.classList.remove('matched'); prevEl.style.pointerEvents = ''; }
+  if (curEl) { curEl.classList.remove('matched'); curEl.style.pointerEvents = ''; }
+  state.mastery[last.pairId] = Math.max((state.mastery[last.pairId] || 1) - 1, 0);
+  state.score = Math.max(state.score - 20, 0);
+  state.streak = Math.max(state.streak - 1, 0);
+  matchPairs[last.idx1].matched = false;
+  matchPairs[last.idx2].matched = false;
+  saveState(); updateStats();
+  document.getElementById('matchUndoBtn').style.display = matchHistory.length > 0 ? 'inline-flex' : 'none';
+}
+
+// ===================== MASTERY FILTER =====================
+let masteryFilterVal = 'all';
+
+function buildMasteryFilter() {
+  const container = document.getElementById('masteryFilter');
+  const filters = [
+    { id: 'all', label: t('mastery_all') },
+    { id: '0', label: t('mastery_new') },
+    { id: '1', label: t('mastery_learning') },
+    { id: '2', label: t('mastery_familiar') },
+    { id: '3', label: t('mastery_mastered') },
+  ];
+  container.innerHTML = '';
+  filters.forEach(f => {
+    const pill = document.createElement('button');
+    pill.className = 'mastery-pill' + (masteryFilterVal === f.id ? ' active' : '');
+    pill.textContent = f.label;
+    pill.onclick = () => { masteryFilterVal = f.id; buildMasteryFilter(); renderWords(); };
+    container.appendChild(pill);
+  });
+}
+
+// ===================== TRICKY WORDS REVIEW =====================
+function renderTrickyWords() {
+  const container = document.getElementById('trickyList');
+  const tricky = VOCAB.filter(v => (state.mastery[vocabIndex(v)] || 0) === 0);
+  document.getElementById('trickyCount').textContent = tricky.length > 0 ? `(${tricky.length})` : '';
+  if (tricky.length === 0) {
+    container.innerHTML = `<div class="tricky-empty">🎉 ${t('all_mastered_msg')}</div>`;
+    return;
+  }
+  container.innerHTML = tricky.map(v => {
+    const idx = vocabIndex(v);
+    return `<div class="word-row" style="border-left-color:#dee2e6">
+      <div class="word-text">
+        <div class="word-en">${v.en}</div>
+        <div class="word-zh">${v.zh}</div>
+        <div class="word-sent">${v.sent_en}</div>
+      </div>
+      <button class="word-audio-btn" onclick="event.stopPropagation(); playAudioDirect(VOCAB[${idx}]?.au?.en)" aria-label="Listen in English">🔊</button>
+      <button class="word-audio-btn" onclick="event.stopPropagation(); playAudioDirect(VOCAB[${idx}]?.au?.sen)" aria-label="Listen to sentence">💬</button>
+    </div>`;
+  }).join('');
+}
+
+// ===================== CIRCULAR PROGRESS RING =====================
+function createProgressRing(pct) {
+  const r = 17, circumference = 2 * Math.PI * r, offset = circumference - (pct / 100) * circumference;
+  return `<svg class="unit-progress-ring" viewBox="0 0 42 42">
+    <circle class="ring-bg" cx="21" cy="21" r="${r}"/>
+    <circle class="ring-fill" cx="21" cy="21" r="${r}" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
+  </svg>`;
+}
+
 // ===================== INIT =====================
 document.querySelectorAll('.nav-tab').forEach(tab => tab.addEventListener('click', () => switchTab(tab.dataset.tab)));
+initDarkMode();
 createEnergyParticles();
 updateUITranslations();
 updateStats();
+renderStreakCalendar();
 initFlashcard();
 </script>
 </body>
