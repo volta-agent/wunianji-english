@@ -1,0 +1,16 @@
+{
+  "name": "Lightning Kid English",
+  "short_name": "Lightning Kid",
+  "description": "五年级上册英语词汇学习 - 闪电少年主题",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1e3a5f",
+  "theme_color": "#f59e0b",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
