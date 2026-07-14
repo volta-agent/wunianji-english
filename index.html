@@ -299,6 +299,10 @@ body {
   font-size: 1.2rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 10;
 }
 
 .audio-btn:active { transform: scale(0.9); }
@@ -389,6 +393,10 @@ body {
   align-items: center;
   gap: 5px;
   transition: all 0.3s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 10;
 }
 
 .sentence-audio-btn:hover {
@@ -1276,15 +1284,15 @@ body.dark-mode .dark-toggle {
     </div>
     <div class="filter-pills" id="flashcardFilters"></div>
     <div class="flashcard-container">
-      <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="flashcard" id="flashcard">
         <div class="flashcard-face flashcard-front">
           <div class="flashcard-unit" id="fcUnit">Unit 1</div>
           <div class="flashcard-counter" id="fcCounter">1 / 30</div>
           <div class="flashcard-word" id="fcWord">loading...</div>
           <div class="audio-row">
-            <button class="audio-btn audio-btn-en" onclick="event.stopPropagation(); playAudio('fc_en')" id="btn_fc_en" aria-label="Play English audio">🔊</button>
+            <button class="audio-btn audio-btn-en" id="btn_fc_en" aria-label="Play English audio">🔊</button>
             <span class="audio-label">EN</span>
-            <button class="audio-btn audio-btn-zh" onclick="event.stopPropagation(); playAudio('fc_zh')" id="btn_fc_zh" aria-label="Play Chinese audio">🔊</button>
+            <button class="audio-btn audio-btn-zh" id="btn_fc_zh" aria-label="Play Chinese audio">🔊</button>
             <span class="audio-label">ZH</span>
           </div>
           <div class="flashcard-hint">👆 点击翻转</div>
@@ -1295,8 +1303,8 @@ body.dark-mode .dark-toggle {
             <div class="sentence-en" id="fcSentEn"></div>
             <div class="sentence-zh" id="fcSentZh"></div>
             <div class="sentence-audio-row">
-              <button class="sentence-audio-btn" onclick="event.stopPropagation(); playAudio('fc_sent_en')">🔊 EN</button>
-              <button class="sentence-audio-btn" onclick="event.stopPropagation(); playAudio('fc_sent_zh')">🔊 ZH</button>
+              <button class="sentence-audio-btn" id="btn_sent_en">🔊 EN</button>
+              <button class="sentence-audio-btn" id="btn_sent_zh">🔊 ZH</button>
             </div>
           </div>
           <div class="flashcard-hint">👆 点击翻回</div>
@@ -1668,13 +1676,20 @@ function renderFlashcard(pool) {
   autoPlayEn();
 }
 
-function flipCard() {
+function flipCard(e) {
+  if (e && e.target.closest('.audio-btn, .sentence-audio-btn')) {
+    return;
+  }
   fcFlipped = !fcFlipped;
   document.getElementById('flashcard').classList.toggle('flipped', fcFlipped);
   if (fcFlipped && document.getElementById('autoPlayCheck').checked) {
     setTimeout(() => playAudio('fc_sent_en'), 500);
   }
 }
+
+document.getElementById('flashcard').addEventListener('click', function(e) {
+  flipCard(e);
+});
 
 function markCard(difficulty) {
   const pool = getFiltered(fcFilter, VOCAB);
@@ -2136,6 +2151,24 @@ createEnergyParticles();
 updateUITranslations();
 updateStats();
 renderStreakCalendar();
+
+document.getElementById('btn_fc_en').addEventListener('click', function(e) {
+  e.stopPropagation();
+  playAudio('fc_en');
+});
+document.getElementById('btn_fc_zh').addEventListener('click', function(e) {
+  e.stopPropagation();
+  playAudio('fc_zh');
+});
+document.getElementById('btn_sent_en').addEventListener('click', function(e) {
+  e.stopPropagation();
+  playAudio('fc_sent_en');
+});
+document.getElementById('btn_sent_zh').addEventListener('click', function(e) {
+  e.stopPropagation();
+  playAudio('fc_sent_zh');
+});
+
 initFlashcard();
 </script>
 </body>
