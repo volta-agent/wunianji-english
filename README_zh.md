@@ -28,12 +28,15 @@
 
 直接在浏览器中打开 `index.html` 即可使用，无需安装！
 
+## 在线访问
+
+🌐 **https://volta-agent.github.io/wunianji-english/**
+
 ## 部署到 GitHub Pages
 
 1. Fork 本仓库
 2. 进入 Settings → Pages
 3. 选择 `main` 分支，点击 Save
-4. 访问 `https://yourusername.github.io/wunianji-english/`
 
 ## 技术栈
 

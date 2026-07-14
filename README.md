@@ -30,12 +30,15 @@ A fun English vocabulary learning app for 5th graders, featuring a Lightning Kid
 
 Simply open `index.html` in any browser — no installation needed!
 
+## Live Demo
+
+🌐 **https://volta-agent.github.io/wunianji-english/**
+
 ## Deploy to GitHub Pages
 
 1. Fork this repository
 2. Go to Settings → Pages
 3. Select `main` branch, click Save
-4. Visit `https://yourusername.github.io/wunianji-english/`
 
 ## Tech Stack
 
