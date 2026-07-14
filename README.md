@@ -1,5 +1,7 @@
 # ⚡ Lightning Kid English ⚡
 
+[中文版](README_zh.md) | English
+
 五年级上册英语词汇学习应用 — 闪电少年主题
 
 A fun English vocabulary learning app for 5th graders, featuring a Lightning Kid superhero theme!
