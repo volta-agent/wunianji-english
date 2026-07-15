@@ -2419,6 +2419,7 @@ function loadNewSpellWord() {
     input.readOnly = !shouldHide;
     input.style.textTransform = 'lowercase';
     if (shouldHide) {
+      input.dataset.expected = letter;
       input.addEventListener('input', function() {
         this.value = this.value.toLowerCase();
         if (this.value) {
@@ -2455,25 +2456,16 @@ function showSpellComplete() {
 function checkSpell() {
   if (spellRoundComplete) return;
   const inputs = document.querySelectorAll('#spellInputs .spell-input:not(.locked)');
-  const originalWord = currentSpellWord.en.toLowerCase();
   let allCorrect = true;
-  const expectedValues = [];
-  for (let i = 0; i < originalWord.length; i++) {
-    if (/[a-z]/.test(originalWord[i])) {
-      expectedValues.push({ char: originalWord[i], index: i });
-    }
-  }
-  inputs.forEach((input, i) => {
-    if (i < expectedValues.length) {
-      const expected = expectedValues[i].char;
-      if (input.value.toLowerCase() === expected) {
-        input.classList.add('correct');
-        input.classList.remove('wrong');
-      } else {
-        input.classList.add('wrong');
-        input.classList.remove('correct');
-        allCorrect = false;
-      }
+  inputs.forEach((input) => {
+    const expected = input.dataset.expected;
+    if (input.value.toLowerCase() === expected) {
+      input.classList.add('correct');
+      input.classList.remove('wrong');
+    } else {
+      input.classList.add('wrong');
+      input.classList.remove('correct');
+      allCorrect = false;
     }
   });
   if (allCorrect) {
