@@ -1899,7 +1899,8 @@ function toggleDark() {
 }
 
 function initDarkMode() {
-  if (localStorage.getItem('ultra-dark') === '1') {
+  // Default to dark mode unless explicitly set to light
+  if (localStorage.getItem('ultra-dark') !== '0') {
     document.body.classList.add('dark-mode');
     document.getElementById('darkToggle').textContent = '☀️';
   }
