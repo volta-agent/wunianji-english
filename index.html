@@ -2000,6 +2000,7 @@ document.addEventListener('touchend', (e) => {
     if (dx < 0) markCard('easy');
     else markCard('hard');
   } else if (Math.abs(dy) < 20 && Math.abs(dx) < 20) {
+    touchHandledFlip = true;
     flipCard();
   }
 }, { passive: true });
@@ -2140,7 +2141,13 @@ updateUITranslations();
 updateStats();
 renderStreakCalendar();
 
+let touchHandledFlip = false;
+
 document.getElementById('flashcard').addEventListener('click', function(e) {
+  if (touchHandledFlip) {
+    touchHandledFlip = false;
+    return;
+  }
   if (!e.target.closest('button')) {
     flipCard();
   }
