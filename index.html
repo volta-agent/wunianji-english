@@ -1681,7 +1681,7 @@ const I18N = {
   zh: {
     subtitle: '五年级上册 · 闪电少年英语学习',
     learned: '已学会', streak: '连续', total: '总计', score: '得分',
-    progress: '学习进度', tab_cards: '卡片', tab_quiz: '测验', tab_match: '配对', tab_words: '单词', tab_spell: '拼写', spell_easy: '简单', spell_medium: '中等', spell_hard: '困难', btn_skip: '⏭️ 跳过', btn_check: '✅ 检查',
+    progress: '学习进度', tab_cards: '卡片', tab_quiz: '测验', tab_match: '配对', tab_words: '单词', tab_spell: '拼写', spell_easy: '简单', spell_medium: '中等', spell_hard: '困难', btn_skip: '⏭️ 跳过', btn_check: '✅ 检查', spell_round_complete: '🎉 本轮完成！', spell_new_round: '🔄 新一轮',
     auto_play: '🔊 自动播放语音', btn_tricky: '💔 不会', btn_gotit: '💚 会了', new_round: '🔄 新一轮',
     unit: '单元', mastered: '已掌握', quiz_question: '这个词是什么意思？ 🤔',
     round_complete: '本轮完成！再来一轮？', perfect_match: '完美配对！',
@@ -1694,7 +1694,7 @@ const I18N = {
   en: {
     subtitle: '5th Grade · Ultraman English Learning',
     learned: 'Learned', streak: 'Streak', total: 'Total', score: 'Score',
-    progress: 'Progress', tab_cards: 'Cards', tab_quiz: 'Quiz', tab_match: 'Match', tab_words: 'Words', tab_spell: 'Spell', spell_easy: 'Easy', spell_medium: 'Medium', spell_hard: 'Hard', btn_skip: '⏭️ Skip', btn_check: '✅ Check',
+    progress: 'Progress', tab_cards: 'Cards', tab_quiz: 'Quiz', tab_match: 'Match', tab_words: 'Words', tab_spell: 'Spell', spell_easy: 'Easy', spell_medium: 'Medium', spell_hard: 'Hard', btn_skip: '⏭️ Skip', btn_check: '✅ Check', spell_round_complete: '🎉 Round Complete!', spell_new_round: '🔄 New Round',
     auto_play: '🔊 Auto-play audio', btn_tricky: '💔 Tricky', btn_gotit: '💚 Got it!', new_round: '🔄 New Round',
     unit: 'Unit', mastered: 'mastered', quiz_question: 'What does this mean? 🤔',
     round_complete: 'Round complete! Start a new one?', perfect_match: 'Perfect Match!',
@@ -1809,7 +1809,7 @@ function switchTab(tab) {
   if (tab === 'quiz') startQuiz();
   if (tab === 'match') startMatch();
   if (tab === 'words') renderWords();
-  if (tab === 'spell') loadNewSpellWord();
+  if (tab === 'spell') startNewSpellRound();
   if (tab !== 'flashcard') {
     const hint = document.getElementById('swipeHint');
     if (hint) hint.style.display = 'none';
@@ -2335,55 +2335,97 @@ let currentSpellWord = null;
 let spellLevel = 'easy';
 let spellCorrect = 0;
 let spellStreakCount = 0;
+let spellRound = 0;
+const SPELL_ROUND_LIMIT = 10;
+let spellRoundComplete = false;
 
 function setSpellLevel(level) {
   spellLevel = level;
   document.querySelectorAll('.spell-level').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.level === level);
   });
+  startNewSpellRound();
+}
+
+function startNewSpellRound() {
+  spellRound = 0;
+  spellCorrect = 0;
+  spellStreakCount = 0;
+  spellRoundComplete = false;
+  updateSpellStats();
   loadNewSpellWord();
 }
 
 function loadNewSpellWord() {
+  if (spellRound >= SPELL_ROUND_LIMIT) {
+    showSpellComplete();
+    return;
+  }
   const pool = getFiltered(fcFilter, VOCAB);
   currentSpellWord = pool[Math.floor(Math.random() * pool.length)];
-  const word = currentSpellWord.en.toLowerCase().replace(/[^a-z]/g, '');
-  const letters = word.split('');
+  const originalWord = currentSpellWord.en;
+  const lowerWord = originalWord.toLowerCase();
+  const letters = [];
+  const isSpace = [];
+  for (let i = 0; i < lowerWord.length; i++) {
+    if (lowerWord[i] === ' ') {
+      letters.push(' ');
+      isSpace.push(true);
+    } else if (/[a-z]/.test(lowerWord[i])) {
+      letters.push(lowerWord[i]);
+      isSpace.push(false);
+    }
+  }
+  const letterIndices = [];
+  for (let i = 0; i < letters.length; i++) {
+    if (!isSpace[i]) letterIndices.push(i);
+  }
   let hideCount;
   if (spellLevel === 'easy') {
-    hideCount = Math.min(2, Math.max(1, Math.floor(letters.length * 0.2)));
+    hideCount = Math.min(2, Math.max(1, Math.floor(letterIndices.length * 0.2)));
   } else if (spellLevel === 'medium') {
-    hideCount = Math.min(4, Math.max(2, Math.floor(letters.length * 0.5)));
+    hideCount = Math.min(4, Math.max(2, Math.floor(letterIndices.length * 0.5)));
   } else {
-    hideCount = letters.length;
+    hideCount = letterIndices.length;
   }
   const positions = [];
-  while (positions.length < hideCount) {
-    const pos = Math.floor(Math.random() * letters.length);
-    if (!positions.includes(pos)) positions.push(pos);
+  const available = [...letterIndices];
+  while (positions.length < hideCount && available.length > 0) {
+    const randIdx = Math.floor(Math.random() * available.length);
+    positions.push(available.splice(randIdx, 1)[0]);
   }
   positions.sort((a, b) => a - b);
-  document.getElementById('spellHint').textContent = `Unit ${currentSpellWord.unit}`;
+  document.getElementById('spellHint').textContent = `Unit ${currentSpellWord.unit} · ${spellRound + 1}/${SPELL_ROUND_LIMIT}`;
   document.getElementById('spellZh').textContent = currentSpellWord.zh;
   document.getElementById('spellSentence').textContent = currentSpellWord.sent_en;
   const inputsDiv = document.getElementById('spellInputs');
   inputsDiv.innerHTML = '';
   letters.forEach((letter, i) => {
+    if (isSpace[i]) {
+      const spacer = document.createElement('div');
+      spacer.style.width = '16px';
+      spacer.style.flexShrink = '0';
+      inputsDiv.appendChild(spacer);
+      return;
+    }
     const input = document.createElement('input');
     input.type = 'text';
     input.maxLength = 1;
-    input.className = 'spell-input' + (positions.includes(i) ? '' : ' locked');
+    const shouldHide = positions.includes(i);
+    input.className = 'spell-input' + (shouldHide ? '' : ' locked');
     input.dataset.index = i;
     input.dataset.letter = letter;
-    input.value = positions.includes(i) ? '' : letter;
-    input.readOnly = !positions.includes(i);
+    input.value = shouldHide ? '' : letter;
+    input.readOnly = !shouldHide;
     input.style.textTransform = 'lowercase';
-    if (positions.includes(i)) {
+    if (shouldHide) {
       input.addEventListener('input', function() {
         this.value = this.value.toLowerCase();
         if (this.value) {
-          const next = inputsDiv.querySelector(`[data-index="${parseInt(this.dataset.index) + 1}"]`);
-          if (next && !next.readOnly) next.focus();
+          const next = this.nextElementSibling;
+          if (next && next.classList.contains('spell-input') && !next.readOnly) {
+            next.focus();
+          }
         }
       });
     }
@@ -2393,23 +2435,49 @@ function loadNewSpellWord() {
   if (firstInput) firstInput.focus();
 }
 
+function showSpellComplete() {
+  spellRoundComplete = true;
+  const inputsDiv = document.getElementById('spellInputs');
+  inputsDiv.innerHTML = `
+    <div style="text-align:center;padding:20px;">
+      <div style="font-size:3rem;margin-bottom:12px;">🎉</div>
+      <div style="font-size:1.3rem;font-weight:800;color:var(--dark);margin-bottom:8px;">${t('spell_round_complete')}</div>
+      <div style="font-size:1rem;color:var(--blue-light);margin-bottom:16px;">✅ ${spellCorrect}/${SPELL_ROUND_LIMIT}</div>
+      <button class="card-btn btn-easy" onclick="startNewSpellRound()" style="display:inline-flex;">
+        <span data-i18n="spell_new_round">🔄 新一轮</span>
+      </button>
+    </div>`;
+  document.getElementById('spellZh').textContent = '';
+  document.getElementById('spellSentence').textContent = '';
+  document.getElementById('spellHint').textContent = '';
+}
+
 function checkSpell() {
+  if (spellRoundComplete) return;
   const inputs = document.querySelectorAll('#spellInputs .spell-input:not(.locked)');
-  const word = currentSpellWord.en.toLowerCase().replace(/[^a-z]/g, '');
+  const originalWord = currentSpellWord.en.toLowerCase();
   let allCorrect = true;
-  inputs.forEach(input => {
-    const index = parseInt(input.dataset.index);
-    const expected = word[index];
-    if (input.value.toLowerCase() === expected) {
-      input.classList.add('correct');
-      input.classList.remove('wrong');
-    } else {
-      input.classList.add('wrong');
-      input.classList.remove('correct');
-      allCorrect = false;
+  const expectedValues = [];
+  for (let i = 0; i < originalWord.length; i++) {
+    if (/[a-z]/.test(originalWord[i])) {
+      expectedValues.push({ char: originalWord[i], index: i });
+    }
+  }
+  inputs.forEach((input, i) => {
+    if (i < expectedValues.length) {
+      const expected = expectedValues[i].char;
+      if (input.value.toLowerCase() === expected) {
+        input.classList.add('correct');
+        input.classList.remove('wrong');
+      } else {
+        input.classList.add('wrong');
+        input.classList.remove('correct');
+        allCorrect = false;
+      }
     }
   });
   if (allCorrect) {
+    spellRound++;
     spellCorrect++;
     spellStreakCount++;
     state.mastery[vocabIndex(currentSpellWord)] = Math.min((state.mastery[vocabIndex(currentSpellWord)] || 0) + 1, 3);
@@ -2431,13 +2499,15 @@ function checkSpell() {
           input.classList.remove('wrong');
         }
       });
-      const firstWrong = document.querySelector('#spellInputs .spell-input.wrong') || document.querySelector('#spellInputs .spell-input:not(.locked):not(.correct)');
-      if (firstWrong) firstWrong.focus();
+      const firstInput = document.querySelector('#spellInputs .spell-input:not(.locked):not(.correct)');
+      if (firstInput) firstInput.focus();
     }, 1000);
   }
 }
 
 function skipSpell() {
+  if (spellRoundComplete) return;
+  spellRound++;
   spellStreakCount = 0;
   updateSpellStats();
   loadNewSpellWord();
