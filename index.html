@@ -2397,7 +2397,7 @@ function loadNewSpellWord() {
   positions.sort((a, b) => a - b);
   document.getElementById('spellHint').textContent = `Unit ${currentSpellWord.unit} · ${spellRound + 1}/${SPELL_ROUND_LIMIT}`;
   document.getElementById('spellZh').textContent = currentSpellWord.zh;
-  document.getElementById('spellSentence').textContent = currentSpellWord.sent_en;
+  document.getElementById('spellSentence').textContent = currentSpellWord.sent_zh;
   const inputsDiv = document.getElementById('spellInputs');
   inputsDiv.innerHTML = '';
   letters.forEach((letter, i) => {
